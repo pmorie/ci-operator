@@ -289,14 +289,15 @@ type TestStepConfiguration struct {
 	ArtifactDir string `json:"artifact_dir"`
 
 	// Only one of the following can be not-null.
-	ContainerTestConfiguration                      *ContainerTestConfiguration                      `json:"container,omitempty"`
-	OpenshiftAnsibleClusterTestConfiguration        *OpenshiftAnsibleClusterTestConfiguration        `json:"openshift_ansible,omitempty"`
-	OpenshiftAnsibleSrcClusterTestConfiguration     *OpenshiftAnsibleSrcClusterTestConfiguration     `json:"openshift_ansible_src,omitempty"`
-	OpenshiftAnsibleCustomClusterTestConfiguration  *OpenshiftAnsibleCustomClusterTestConfiguration  `json:"openshift_ansible_custom,omitempty"`
-	OpenshiftAnsible40ClusterTestConfiguration      *OpenshiftAnsible40ClusterTestConfiguration      `json:"openshift_ansible_40,omitempty"`
-	OpenshiftAnsibleUpgradeClusterTestConfiguration *OpenshiftAnsibleUpgradeClusterTestConfiguration `json:"openshift_ansible_upgrade,omitempty"`
-	OpenshiftInstallerClusterTestConfiguration      *OpenshiftInstallerClusterTestConfiguration      `json:"openshift_installer,omitempty"`
-	OpenshiftInstallerSrcClusterTestConfiguration   *OpenshiftInstallerSrcClusterTestConfiguration   `json:"openshift_installer_src,omitempty"`
+	ContainerTestConfiguration                          *ContainerTestConfiguration                          `json:"container,omitempty"`
+	OpenshiftAnsibleClusterTestConfiguration            *OpenshiftAnsibleClusterTestConfiguration            `json:"openshift_ansible,omitempty"`
+	OpenshiftAnsibleSrcClusterTestConfiguration         *OpenshiftAnsibleSrcClusterTestConfiguration         `json:"openshift_ansible_src,omitempty"`
+	OpenshiftAnsibleCustomClusterTestConfiguration      *OpenshiftAnsibleCustomClusterTestConfiguration      `json:"openshift_ansible_custom,omitempty"`
+	OpenshiftAnsible40ClusterTestConfiguration          *OpenshiftAnsible40ClusterTestConfiguration          `json:"openshift_ansible_40,omitempty"`
+	OpenshiftAnsibleUpgradeClusterTestConfiguration     *OpenshiftAnsibleUpgradeClusterTestConfiguration     `json:"openshift_ansible_upgrade,omitempty"`
+	OpenshiftInstallerClusterTestConfiguration          *OpenshiftInstallerClusterTestConfiguration          `json:"openshift_installer,omitempty"`
+	OpenshiftInstallerSrcClusterTestConfiguration       *OpenshiftInstallerSrcClusterTestConfiguration       `json:"openshift_installer_src,omitempty"`
+	OpenshiftInstallerContainerClusterTestConfiguration *OpenshiftInstallerContainerClusterTestConfiguration `json:"openshift_installer_container,omitempty"`
 }
 
 // ContainerTestConfiguration describes a test that runs a
@@ -383,6 +384,16 @@ type OpenshiftInstallerClusterTestConfiguration struct {
 // executes a command in the `src` image.
 type OpenshiftInstallerSrcClusterTestConfiguration struct {
 	ClusterTestConfiguration `json:",inline"`
+}
+
+// OpenshiftInstallerContainerClusterTestConfiguration describes a test that
+// provisions a cluster using openshift-installer and executes a command in one
+// of the previously built images.
+type OpenshiftInstallerContainerClusterTestConfiguration struct {
+	ClusterTestConfiguration `json:",inline"`
+	// From is the image stream tag in the pipeline to run this
+	// command in.
+	From PipelineImageStreamTagReference `json:"from"`
 }
 
 // PipelineImageStreamTagReference is a tag on the
